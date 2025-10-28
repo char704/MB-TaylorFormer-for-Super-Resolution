@@ -45,7 +45,7 @@ datasets:
       type: disk
 
 network_g:
-  type: MBTaylorFormerV2
+  type: MB_TaylorFormerV2
   in_chans: 3
   embed_dim: 96
   depths: [4, 4, 4]
