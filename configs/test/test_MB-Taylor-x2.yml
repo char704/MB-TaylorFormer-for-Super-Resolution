@@ -1,0 +1,41 @@
+name: MB-TaylorV2_x2_TEST
+model_type: SRModel
+scale: 2
+
+datasets:
+  test_1:
+    name: Set5
+    type: PairedImageDataset
+    dataroot_gt: path_to/Set5/HR
+    dataroot_lq: path_to/Set5/LR_bicubic/X2
+    io_backend:
+      type: disk
+
+network_g:
+  type: MBTaylorFormerV2
+  in_chans: 3
+  embed_dim: 96
+  depths: [4, 4, 4]
+  num_heads: [3, 3, 3]
+  mlp_ratio: 2.0
+  taylor_order: 3
+  window_size: 8
+  conv_fusion: true
+  upscale: 2
+
+path:
+  pretrain_network_g: pretrained/MB-TaylorV2_x2.pth
+  strict_load_g: true
+
+val:
+  save_img: true
+  suffix: ~
+  metrics:
+    psnr:
+      type: calculate_psnr
+      crop_border: 2
+      test_y_channel: false
+    ssim:
+      type: calculate_ssim
+      crop_border: 2
+      test_y_channel: false
