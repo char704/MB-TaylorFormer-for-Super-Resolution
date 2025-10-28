@@ -6,27 +6,41 @@ manual_seed: 123
 
 datasets:
   train:
+  task: SR
     name: DIV2K
     type: PairedImageDataset
-    dataroot_gt: path_to/DIV2K_train_HR
-    dataroot_lq: path_to/DIV2K_train_LR_bicubic/X2
-    filename_tmpl: '{}'
+    dataroot_gt: datasets/DIV2K/DIV2K_HR
+    dataroot_lq: datasets/DIV2K/DIV2K_LR_bicubic/x2
+    filename_tmpl: '{}x2'
     io_backend:
       type: disk
-    gt_size: 128          # HR patch size (so LR patch is 64 for x2)
+      
+    gt_size: 128
+    use_flip: true
+    use_rot: true
+
     use_shuffle: true
     num_worker_per_gpu: 4
     batch_size_per_gpu: 16
     dataset_enlarge_ratio: 1
     prefetch_mode: ~
-    use_flip: true
-    use_rot: true
+    pin_memory: true
+    
 
-  val:
+  val_0:
     name: Set5
     type: PairedImageDataset
-    dataroot_gt: path_to/Set5/HR
-    dataroot_lq: path_to/Set5/LR_bicubic/X2
+    dataroot_gt: datasets/Set5/HR
+    dataroot_lq: datasets/Set5/LR_bicubic/X2
+    filename_tmpl: '{}x2'
+    io_backend:
+      type: disk
+  val_1:
+    name: Set14
+    type: PairedImageDataset
+    dataroot_gt: datasets/Set14/HR
+    dataroot_lq: datasets/Set14/LR_bicubic/X2
+    filename_tmpl: '{}x2'
     io_backend:
       type: disk
 
