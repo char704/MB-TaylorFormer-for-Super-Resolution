@@ -8,21 +8,32 @@ datasets:
   train:
     name: MySR_train
     type: PairedImageDataset
-    dataroot_gt: datasets/MySR/HR/train
-    dataroot_lq: datasets/MySR/LR/train
+    dataroot_gt: datasets/DIV2K/DIV2K_HR
+    dataroot_lq: datasets/DIV2K/DIV2K_LR_bicubic/x2
+    filename_tmpl: '{}x2'
     io_backend: {type: disk}
     gt_size: 128           # Colab T4 thân thiện; tăng nếu VRAM dư
     use_hflip: true
     use_rot: true
     scale: 2               # Rất quan trọng để crop khớp LR/HR
 
-  val:
-    name: MySR_val
+val_0:
+    name: Set5
     type: PairedImageDataset
-    dataroot_gt: datasets/MySR/HR/val
-    dataroot_lq: datasets/MySR/LR/val
-    io_backend: {type: disk}
-    scale: 2
+    dataroot_gt: datasets/Set5/HR
+    dataroot_lq: datasets/Set5/LR_bicubic/X2
+    filename_tmpl: '{}x2'
+    io_backend:
+      type: disk
+  val_1:
+    name: Set14
+    type: PairedImageDataset
+    dataroot_gt: datasets/Set14/HR
+    dataroot_lq: datasets/Set14/LR_bicubic/X2
+    filename_tmpl: '{}x2'
+    io_backend:
+      type: disk
+
 
 network_g:
   type: MBTaylorFormerV2SR
